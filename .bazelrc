@@ -1,0 +1,5 @@
+# Use primary input json config
+build:use_primary_input --cxxopt=-DUSE_DEFAULT_CONFIG="yes"
+
+# Use secondary input json config
+build:use_secondary_input --//using_select:json_config=use_secondary_json_file

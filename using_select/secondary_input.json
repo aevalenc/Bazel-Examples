@@ -1,0 +1,21 @@
+{
+  "name": "secondary_json",
+  "plain_object": {
+    "pi": 3.14,
+    "happy": true
+  },
+  "vector_object": {
+    "data": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "plain_vector": [
+    1,
+    2,
+    3,
+    4
+  ]
+}
