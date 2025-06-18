@@ -1,0 +1,4 @@
+cc_binary(
+    name = "mpi_hello_world",
+    srcs = ["mpi_hello_world.c"],
+)
