@@ -1,4 +1,5 @@
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 
 string_flag(
     name = "json_config",
@@ -19,7 +20,4 @@ cc_binary(
         "//conditions:default": [USE_DEFAULT_CONFIG],
         ":use_secondary_json_file": [":secondary_input.json"],
     }),
-    deps = [
-        "@nlohmann_json//:json",
-    ],
 )
