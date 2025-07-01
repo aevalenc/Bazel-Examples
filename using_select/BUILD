@@ -1,25 +1,26 @@
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 
-string_flag(
-    name = "json_config",
-    build_setting_default = "lol",
+bool_flag(
+    name = "use_secondary_json_file",
+    build_setting_default = False,
 )
 
-USE_DEFAULT_CONFIG = ":primary_input.json"
-
 config_setting(
-    name = "use_secondary_json_file",
-    flag_values = {"//using_select:json_config": "use_secondary_json_file"},
+    name = "use_secondary_json_file_config",
+    flag_values = {"//using_select:use_secondary_json_file": "True"},
 )
 
 cc_binary(
     name = "using_select",
     srcs = ["using_select.cpp"],
     data = select({
-        "//conditions:default": [USE_DEFAULT_CONFIG],
-        ":use_secondary_json_file": [":secondary_input.json"],
+        ":use_secondary_json_file_config": [":secondary_input.json"],
+        "//conditions:default": [":primary_input.json"],
     }),
-    deps = [
-        "@nlohmann_json//:json",
-    ],
+    defines = select({
+        ":use_secondary_json_file_config": ["USE_SECONDARY_JSON_FILE"],
+        "//conditions:default": ["USE_DEFAULT_CONFIG"],
+    }),
+    deps = ["@nlohmann_json//:json"],
 )
