@@ -24,8 +24,9 @@ all_link_actions = [
     ACTION_NAMES.cpp_link_nodeps_dynamic_library,
 ]
 
-BREW_GCC_PATH = "/usr/local/opt/gcc@12"
-BREW_CELLAR_GCC_PATH = "/usr/local/Cellar/gcc@12"
+BREW_GCC_PATH = "/opt/homebrew/opt/gcc@12"
+BREW_CELLAR_GCC_PATH = "/opt/homebrew/Cellar/gcc@12"
+SDK_PATH = "/Library/Developer/CommandLineTools/SDKs"
 
 def _impl(ctx):
     tool_paths = [
@@ -130,7 +131,7 @@ def _impl(ctx):
         cxx_builtin_include_directories = [
             BREW_GCC_PATH,
             BREW_CELLAR_GCC_PATH,
-            "/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk",
+            SDK_PATH,
         ],
         features = [ar_flags_feature, default_feature],
         toolchain_identifier = "local",
