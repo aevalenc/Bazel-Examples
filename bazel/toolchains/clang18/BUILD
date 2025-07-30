@@ -62,3 +62,17 @@ toolchain(
     toolchain = ":macos_aarch64_clang18_toolchain",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
+
+toolchain(
+    name = "clang18_toolchain_for_macos_x86_64",
+    exec_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:macos",
+    ],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:macos",
+    ],
+    toolchain = ":macos_aarch64_clang18_toolchain",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)

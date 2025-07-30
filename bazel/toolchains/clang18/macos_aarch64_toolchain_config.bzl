@@ -24,6 +24,12 @@ all_link_actions = [
     ACTION_NAMES.cpp_link_nodeps_dynamic_library,
 ]
 
+all_compile_actions = [
+    # NEW
+    ACTION_NAMES.c_compile,
+    ACTION_NAMES.cpp_compile,
+]
+
 BREW_LLVM_PATH = "/opt/homebrew/opt/llvm@18"
 BREW_CELLAR_LLVM_PATH = "/opt/homebrew/Cellar/llvm@18"
 SDK_PATH = "/Library/Developer/CommandLineTools/SDKs"
@@ -126,6 +132,21 @@ def _impl(ctx):
         ],
     )
 
+    target_x86_64_feature = feature(
+        name = "target_x86_64_from_aarch64",
+        enabled = False,
+        flag_sets = [
+            flag_set(
+                actions = all_link_actions + all_compile_actions,
+                flag_groups = ([
+                    flag_group(
+                        flags = ["-target", "x86_64-apple-darwin"],
+                    ),
+                ]),
+            ),
+        ],
+    )
+
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
         cxx_builtin_include_directories = [
@@ -133,7 +154,7 @@ def _impl(ctx):
             BREW_CELLAR_LLVM_PATH,
             SDK_PATH,
         ],
-        features = [ar_flags_feature, default_feature],
+        features = [ar_flags_feature, default_feature, target_x86_64_feature],
         toolchain_identifier = "local",
         host_system_name = "local",
         target_system_name = "local",
