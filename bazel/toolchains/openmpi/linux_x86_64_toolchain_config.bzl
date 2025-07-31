@@ -31,7 +31,7 @@ all_compile_actions = [
 
 def _impl(ctx):
     tool_paths = [
-        tool_path(name = "gcc", path = "/usr/bin/mpicc"),
+        tool_path(name = "gcc", path = "/usr/bin/mpicxx"),
         tool_path(name = "ld", path = "/usr/bin/ld"),
         tool_path(name = "ar", path = "/usr/bin/gcc-ar-9"),
         tool_path(name = "cpp", path = "/bin/false"),
