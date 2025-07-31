@@ -8,6 +8,8 @@
 #include <iostream>
 #include <mpi.h>
 
+#define ROOT_PROCESS_LABEL 0
+
 double JacobiIteration(double *A, double *b, double *x, const std::int32_t n,
                        const std::int32_t max_iter, const double tolerance)
 {
@@ -31,22 +33,43 @@ double JacobiIteration(double *A, double *b, double *x, const std::int32_t n,
       base_rows + (world_rank < remainder ? 1 : 0);
   std::int32_t end_row = start_row + rows_for_this_process;
 
-  // Initialize local variables
+  std::int32_t *sendcounts_A = new std::int32_t[world_size];
+  std::int32_t *displacements_A = new std::int32_t[world_size];
+  std::int32_t *sendcounts_b = new std::int32_t[world_size];
+  std::int32_t *displacements_b = new std::int32_t[world_size];
+  for (std::int32_t i = 0; i < world_size; ++i)
+  {
+    std::int32_t rows = base_rows + (i < remainder ? 1 : 0);
+    sendcounts_A[i] = rows * n;
+    displacements_A[i] = (i * base_rows + std::min(i, remainder)) * n;
+    sendcounts_b[i] = rows;
+    displacements_b[i] = i * base_rows + std::min(i, remainder);
+  }
+
+  // Initialize local buffers for submatrix and vector
   const auto local_A = new double[(end_row - start_row) * n];
   const auto local_b = new double[(end_row - start_row)];
   const auto local_x = new double[(end_row - start_row)];
 
-  std::memcpy(local_A, A + start_row * n,
-              (end_row - start_row) * n * sizeof(double));
-  std::memcpy(local_b, b + start_row, (end_row - start_row) * sizeof(double));
-  std::memcpy(local_x, x + start_row, (end_row - start_row) * sizeof(double));
+  // Send submatrix and vector to each process
+  MPI_Scatterv(A, sendcounts_A, displacements_A, MPI_DOUBLE, local_A,
+               (end_row - start_row) * n, MPI_DOUBLE, ROOT_PROCESS_LABEL,
+               MPI_COMM_WORLD);
+  MPI_Scatterv(b, sendcounts_b, displacements_b, MPI_DOUBLE, local_b,
+               (end_row - start_row), MPI_DOUBLE, ROOT_PROCESS_LABEL,
+               MPI_COMM_WORLD);
+  MPI_Bcast(x, n, MPI_DOUBLE, ROOT_PROCESS_LABEL, MPI_COMM_WORLD);
 
-  //   for (std::int32_t i = 0; i < (end_row - start_row) * n; ++i)
-  //   {
-  //     std::cout << "Process " << world_rank << " A[" << i << "] = " <<
-  //     local_A[i]
-  //               << "\n";
-  //   }
+  //   std::memcpy(local_A, A + start_row * n,
+  //               (end_row - start_row) * n * sizeof(double));
+  //   std::memcpy(local_b, b, n * sizeof(double));
+  //   std::memcpy(local_x, x, n * sizeof(double));
+
+  for (std::int32_t i = 0; i < (end_row - start_row) * n; ++i)
+  {
+    std::cout << "Process " << world_rank << " A[" << i << "] = " << local_A[i]
+              << "\n";
+  }
 
   // Main Jacobi iteration loop
   //   for (std::int32_t iter = 0; iter < max_iter; ++iter)
@@ -85,14 +108,13 @@ double JacobiIteration(double *A, double *b, double *x, const std::int32_t n,
   //                 << iter + 1 << " iterations." << std::endl;
   //     }
 
-  //     //     // Update the global solution vector
-  //     //     MPI_Allgather(local_x + start_row, rows_per_process, MPI_DOUBLE,
-  //     x,
-  //     //                   rows_per_process, MPI_DOUBLE, MPI_COMM_WORLD);
-  //     //     if (end_row < n)
-  //     //     {
-  //     //       std::fill(x + end_row, x + n, 0.0);
-  //     //     }
+  //     // Update the global solution vector
+  //     MPI_Allgather(local_x + start_row, rows_per_process, MPI_DOUBLE, x,
+  //                   rows_per_process, MPI_DOUBLE, MPI_COMM_WORLD);
+  //     if (end_row < n)
+  //     {
+  //       std::fill(x + end_row, x + n, 0.0);
+  //     }
   //   }
 
   // Clean up
