@@ -31,39 +31,14 @@ all_compile_actions = [
 
 def _impl(ctx):
     tool_paths = [
-        # NEW
-        tool_path(
-            name = "gcc",
-            path = "/usr/bin/mpicc",
-        ),
-        tool_path(
-            name = "ld",
-            path = "/usr/bin/ld",
-        ),
-        tool_path(
-            name = "ar",
-            path = "/usr/bin/gcc-ar-9",
-        ),
-        tool_path(
-            name = "cpp",
-            path = "/bin/false",
-        ),
-        tool_path(
-            name = "gcov",
-            path = "/bin/false",
-        ),
-        tool_path(
-            name = "nm",
-            path = "/usr/bin/gcc-nm-9",
-        ),
-        tool_path(
-            name = "objdump",
-            path = "/bin/false",
-        ),
-        tool_path(
-            name = "strip",
-            path = "/bin/false",
-        ),
+        tool_path(name = "gcc", path = "/usr/bin/mpicc"),
+        tool_path(name = "ld", path = "/usr/bin/ld"),
+        tool_path(name = "ar", path = "/usr/bin/gcc-ar-9"),
+        tool_path(name = "cpp", path = "/bin/false"),
+        tool_path(name = "gcov", path = "/bin/false"),
+        tool_path(name = "nm", path = "/usr/bin/gcc-nm-9"),
+        tool_path(name = "objdump", path = "/bin/false"),
+        tool_path(name = "strip", path = "/bin/false"),
     ]
 
     # Features allow us to specify linker flags for libraries
@@ -71,7 +46,7 @@ def _impl(ctx):
         # NEW
         feature(
             name = "openmpi_flags",
-            # enabled = True,
+            enabled = True,
             flag_sets = [
                 flag_set(
                     actions = all_link_actions,
@@ -93,8 +68,8 @@ def _impl(ctx):
                         flag_group(
                             flags = [
                                 "-pthread",
-                                "-I/usr/lib/openmpi/include",
-                                "-I/usr/lib/openmpi/include/openmpi",
+                                "-I/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi",
+                                "-I/usr/lib/x86_64-linux-gnu/openmpi/include",
                             ],
                         ),
                     ]),
