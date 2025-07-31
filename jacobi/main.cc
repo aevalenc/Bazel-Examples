@@ -24,14 +24,13 @@ int main()
                       0,  0,  0,  0,  0, -1,  2 };
   // clang-format on
 
-  double b[n] = {200, 0, 0, 0, 400};
-  double x[n] = {0, 0, 0, 0, 0};
+  double b[n] = {200, 0, 0, 0, 0, 0, 400};
+  double x[n] = {0, 0, 0, 0, 0, 0, 0};
 
-  const std::int32_t max_iter = 25;
-  const double tolerance = 1e-6;
+  const std::int32_t max_iter = 1000;
+  const double tolerance = 1e-3;
 
-  double result = JacobiIteration(A, b, x, n, max_iter, tolerance);
+  JacobiIteration(A, b, x, n, max_iter, tolerance);
 
-  std::cout << "Result after Jacobi iteration: " << result << std::endl;
   return 0;
 }

@@ -1,4 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
 cc_library(
     name = "jacobi",
@@ -10,4 +11,11 @@ cc_binary(
     name = "main",
     srcs = ["main.cc"],
     deps = [":jacobi"],
+)
+
+sh_binary(
+    name = "run_main",
+    srcs = ["run_main.sh"],
+    data = [":main"],
+    visibility = ["//visibility:public"],
 )
