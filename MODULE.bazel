@@ -24,3 +24,6 @@ git_override(
 register_toolchains(
     "//bazel/toolchains/gcc9:gcc9_toolchain_for_linux_x86_64",
 )
+
+mpi_clang18 = use_extension("//third_party/openmpi:openmpi.bzl", "openmpi")
+use_repo(mpi_clang18, "openmpi")

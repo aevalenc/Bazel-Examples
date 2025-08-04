@@ -160,6 +160,34 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
+    "//third_party/openmpi:openmpi.bzl%openmpi": {
+      "general": {
+        "bzlTransitiveDigest": "twpZcgbT/RU1A5hw8KjUBabf0A4at6641QmU0FS5iX0=",
+        "usagesDigest": "xEXF3L4zryHg1g6RWAsiLVbVzOWcPbZdGjFK4P7505k=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "openmpi": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "strip_prefix": "openmpi-5.0.8",
+              "urls": [
+                "https://download.open-mpi.org/release/open-mpi/v5.0/openmpi-5.0.8.tar.gz"
+              ],
+              "build_file": "@@//third_party/openmpi:openmpi.BUILD"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
         "bzlTransitiveDigest": "sFhcgPbDQehmbD1EOXzX4H1q/CD5df8zwG4kp4jbvr8=",
