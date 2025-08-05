@@ -162,7 +162,7 @@
   "moduleExtensions": {
     "//third_party/openmpi:openmpi.bzl%openmpi": {
       "general": {
-        "bzlTransitiveDigest": "twpZcgbT/RU1A5hw8KjUBabf0A4at6641QmU0FS5iX0=",
+        "bzlTransitiveDigest": "QLBF7YnHuFtTGcl6Kk8WUOxtjDlTABwOD4gKhU4uFSs=",
         "usagesDigest": "xEXF3L4zryHg1g6RWAsiLVbVzOWcPbZdGjFK4P7505k=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
