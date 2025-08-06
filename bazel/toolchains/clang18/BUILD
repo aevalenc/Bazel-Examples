@@ -34,7 +34,10 @@ toolchain(
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
 
-macos_aarch64_toolchain_config(name = "macos_aarch64_toolchain_config")
+macos_aarch64_toolchain_config(
+    name = "macos_aarch64_toolchain_config",
+    ar_flags = "rcs",
+)
 
 cc_toolchain(
     name = "macos_aarch64_clang18_toolchain",

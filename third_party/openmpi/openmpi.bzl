@@ -17,37 +17,37 @@ def _openmpi_lib_impl(mctx):
         # patches = ["//third_party/openmpi:add_cpp_header.patch"],
     )
 
-    result = mctx.execute(["pwd"])
-    ls_result = mctx.execute(["ls"], working_directory = "/home/se20412/Documents/Personal/Learning/Bazel-Examples/third_party/openmpi")
-    print("\n\tPrint working directory: {}".format(result.stdout))  # buildifier: disable=print
-    print("List of files: {}".format(ls_result.stdout))  # buildifier: disable=print
+    # result = mctx.execute(["pwd"])
+    # ls_result = mctx.execute(["ls"], working_directory = "/home/se20412/Documents/Personal/Learning/Bazel-Examples/third_party/openmpi")
+    # print("\n\tPrint working directory: {}".format(result.stdout))  # buildifier: disable=print
+    # print("List of files: {}".format(ls_result.stdout))  # buildifier: disable=print
 
-    result = result.stdout.split("/")[0:-2]
-    output_base = "/".join(result)
-    print("\n\tOutputbase: {}".format(output_base))  # buildifier: disable=print
+    # result = result.stdout.split("/")[0:-2]
+    # output_base = "/".join(result)
+    # print("\n\tOutputbase: {}".format(output_base))  # buildifier: disable=print
 
-    mctx.file(
-        output_base + "/external/+openmpi+openmpi/lol.sh",
-        content = """
-        #!/bin/bash
+    # mctx.file(
+    #     output_base + "/external/+openmpi+openmpi/lol.sh",
+    #     content = """
+    #     #!/bin/bash
 
-        # Configure OpenMPI build
-        mkdir -p build/install
-        cd build
-        if [ $? -ne 0 ]; then
-            echo "Failed to create or change to build directory."
-            exit 1
-        fi
+    #     # Configure OpenMPI build
+    #     mkdir -p build/install
+    #     cd build
+    #     if [ $? -ne 0 ]; then
+    #         echo "Failed to create or change to build directory."
+    #         exit 1
+    #     fi
 
-        ../configure --prefix=build/install CC=clang-18 CXX=clang++-18 FC=flang-7
-        # Check if the configuration was successful
-        if [ $? -ne 0 ]; then
-            echo "Configuration failed. Please check the output for errors."
-            exit 1
-        fi
+    #     ../configure --prefix=build/install CC=clang-18 CXX=clang++-18 FC=flang-7
+    #     # Check if the configuration was successful
+    #     if [ $? -ne 0 ]; then
+    #         echo "Configuration failed. Please check the output for errors."
+    #         exit 1
+    #     fi
 
-        """,
-        executable = True,
-    )
+    #     """,
+    #     executable = True,
+    # )
 
 openmpi = module_extension(implementation = _openmpi_lib_impl)

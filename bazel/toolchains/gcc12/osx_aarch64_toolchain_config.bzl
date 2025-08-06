@@ -24,8 +24,15 @@ all_link_actions = [
     ACTION_NAMES.cpp_link_nodeps_dynamic_library,
 ]
 
+all_compile_actions = [
+    # NEW
+    ACTION_NAMES.c_compile,
+    ACTION_NAMES.cpp_compile,
+]
+
 BREW_GCC_PATH = "/opt/homebrew/opt/gcc@12"
 BREW_CELLAR_GCC_PATH = "/opt/homebrew/Cellar/gcc@12"
+SDK_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOsSX.sdk"
 
 def _impl(ctx):
     tool_paths = [
@@ -125,14 +132,33 @@ def _impl(ctx):
         ],
     )
 
+    openmpi_build_feature = feature(
+        name = "openmpi_flags",
+        enabled = False,
+        flag_sets = [
+            flag_set(
+                actions = all_compile_actions,
+                flag_groups = ([
+                    flag_group(
+                        flags = [
+                            "-O3",
+                            "-DNDEBUG",
+                            "-finline-functions",
+                        ],
+                    ),
+                ]),
+            ),
+        ],
+    )
+
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
         cxx_builtin_include_directories = [
             BREW_GCC_PATH,
             BREW_CELLAR_GCC_PATH,
-            "/Library/Developer/CommandLineTools/SDKs/MacOSX14.sdk",
+            SDK_PATH,
         ],
-        features = [ar_flags_feature, default_feature],
+        features = [ar_flags_feature, default_feature, openmpi_build_feature],
         toolchain_identifier = "local",
         host_system_name = "local",
         target_system_name = "local",
