@@ -1,0 +1,91 @@
+diff --git 3rd-party/openpmix/Makefile.am 3rd-party/openpmix/Makefile.am
+index d320f10..b463d6b 100644
+--- 3rd-party/openpmix/Makefile.am
++++ 3rd-party/openpmix/Makefile.am
+@@ -26,7 +26,7 @@
+ # via AC_CONFIG_MACRO_DIR in configure.ac.
+ ACLOCAL_AMFLAGS = -I ./config
+ 
+-SUBDIRS = config contrib include src etc bindings docs
++SUBDIRS = config contrib include src etc bindings
+ 
+ AM_DISTCHECK_CONFIGURE_FLAGS = --disable-dlopen
+ 
+diff --git 3rd-party/openpmix/Makefile.in 3rd-party/openpmix/Makefile.in
+index 9a70e69..461dda0 100644
+--- 3rd-party/openpmix/Makefile.in
++++ 3rd-party/openpmix/Makefile.in
+@@ -272,7 +272,7 @@ am__define_uniq_tagged_files = \
+   unique=`for i in $$list; do \
+     if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+   done | $(am__uniquify_input)`
+-DIST_SUBDIRS = config contrib include src etc bindings docs . \
++DIST_SUBDIRS = config contrib include src etc bindings . \
+ 	test/test_v2 test examples
+ am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/./config/ar-lib \
+ 	$(top_srcdir)/./config/compile \
+@@ -651,7 +651,7 @@ top_srcdir = @top_srcdir@
+ # Note that the -I directory must *exactly* match what was specified
+ # via AC_CONFIG_MACRO_DIR in configure.ac.
+ ACLOCAL_AMFLAGS = -I ./config
+-SUBDIRS = config contrib include src etc bindings docs $(am__append_1)
++SUBDIRS = config contrib include src etc bindings $(am__append_1)
+ AM_DISTCHECK_CONFIGURE_FLAGS = --disable-dlopen
+ headers = 
+ sources = 
+diff --git 3rd-party/prrte/Makefile.am 3rd-party/prrte/Makefile.am
+index 1145e42..3d39334 100644
+--- 3rd-party/prrte/Makefile.am
++++ 3rd-party/prrte/Makefile.am
+@@ -24,7 +24,7 @@
+ # $HEADER$
+ #
+ 
+-SUBDIRS = config contrib src include docs
++SUBDIRS = config contrib src include
+ EXTRA_DIST = README.md VERSION LICENSE autogen.pl
+ 
+ include examples/Makefile.include
+diff --git 3rd-party/prrte/Makefile.in 3rd-party/prrte/Makefile.in
+index eeaf9dc..66e715e 100644
+--- 3rd-party/prrte/Makefile.in
++++ 3rd-party/prrte/Makefile.in
+@@ -672,7 +672,7 @@ target_vendor = @target_vendor@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-SUBDIRS = config contrib src include docs
++SUBDIRS = config contrib src include
+ EXTRA_DIST = README.md VERSION LICENSE autogen.pl examples/README \
+ 	examples/Makefile examples/examples.h examples/alloc.c \
+ 	examples/bad_exit.c examples/client.c examples/client2.c \
+diff --git Makefile.am Makefile.am
+index bff3c79..ed2bd5f 100644
+--- Makefile.am
++++ Makefile.am
+@@ -25,8 +25,8 @@
+ # There is an assumption in config/Makefile.am that config is the first
+ # subdirectory in the DIST_SUBDIRS list.  If that changes, work may
+ # be required.
+-SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_SUBDIRS) test docs
+-DIST_SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_DIST_SUBDIRS) test docs
++SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_SUBDIRS) test
++DIST_SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_DIST_SUBDIRS) test
+ EXTRA_DIST = README.md VERSION Doxyfile LICENSE autogen.pl AUTHORS
+ 
+ include examples/Makefile.include
+diff --git Makefile.in Makefile.in
+index 9dc3dc5..b3b3522 100644
+--- Makefile.in
++++ Makefile.in
+@@ -1448,8 +1448,8 @@ topo_treematch_LIBS = @topo_treematch_LIBS@
+ # There is an assumption in config/Makefile.am that config is the first
+ # subdirectory in the DIST_SUBDIRS list.  If that changes, work may
+ # be required.
+-SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_SUBDIRS) test docs
+-DIST_SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_DIST_SUBDIRS) test docs
++SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_SUBDIRS) test
++DIST_SUBDIRS = config contrib 3rd-party $(MCA_PROJECT_DIST_SUBDIRS) test
+ EXTRA_DIST = README.md VERSION Doxyfile LICENSE autogen.pl AUTHORS \
+ 	examples/README.md examples/Makefile examples/hello_c.c \
+ 	examples/hello_mpifh.f examples/hello_usempi.f90 \

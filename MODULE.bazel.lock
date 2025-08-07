@@ -173,7 +173,7 @@
   "moduleExtensions": {
     "//third_party/openmpi:openmpi.bzl%openmpi": {
       "general": {
-        "bzlTransitiveDigest": "YWKJlwH7Mky8S/V44/vw3Q8gYxcC2MXFT6nLB+tQTmA=",
+        "bzlTransitiveDigest": "uAhgikzOaAUWFHahC+zEh2qhguqLlFbiw1ObfVfEtyc=",
         "usagesDigest": "xEXF3L4zryHg1g6RWAsiLVbVzOWcPbZdGjFK4P7505k=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -186,7 +186,10 @@
               "urls": [
                 "https://download.open-mpi.org/release/open-mpi/v5.0/openmpi-5.0.8.tar.gz"
               ],
-              "build_file": "@@//third_party/openmpi:openmpi.BUILD"
+              "build_file": "@@//third_party/openmpi:openmpi.BUILD",
+              "patches": [
+                "@@//third_party/openmpi:remove_docs_from_subdirectories_to_build.patch"
+              ]
             }
           }
         },

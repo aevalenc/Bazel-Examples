@@ -126,6 +126,26 @@ def _impl(ctx):
         ],
     )
 
+    cpp_feature = feature(
+        name = "cpp_feature",
+        enabled = True,
+        flag_sets = [
+            flag_set(
+                actions = [ACTION_NAMES.cpp_compile],
+                flag_groups = ([
+                    flag_group(
+                        flags = [
+                            "-std=c++17",
+                            "-stdlib=libc++",
+                            "-fno-exceptions",
+                            "-fno-rtti",
+                        ],
+                    ),
+                ]),
+            ),
+        ],
+    )
+
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
         cxx_builtin_include_directories = [
@@ -133,7 +153,7 @@ def _impl(ctx):
             BREW_CELLAR_LLVM_PATH,
             SDK_PATH,
         ],
-        features = [ar_flags_feature, default_feature],
+        features = [ar_flags_feature, default_feature, cpp_feature],
         toolchain_identifier = "local",
         host_system_name = "local",
         target_system_name = "local",

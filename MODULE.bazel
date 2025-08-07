@@ -15,6 +15,10 @@ bazel_dep(name = "rules_shell", version = "0.5.0")
 bazel_dep(name = "rules_foreign_cc", version = "0.15.0")
 
 bazel_dep(name = "toolchains_llvm", version = "1.4.0")
+# single_version_override(
+#     module_name = "toolchains_llvm",
+#     patches = ["//third_party/openmpi:disable_static_flag_for_llvm_toolchain.patch"],
+# )
 
 # Configure and register the toolchain.
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")

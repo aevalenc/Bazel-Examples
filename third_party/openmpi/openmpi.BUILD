@@ -7,7 +7,10 @@ filegroup(
 
 configure_make(
     name = "configure_mpi_clang18",
-    args = ["-j4"],
+    args = [
+        "V=1",
+        "-j4",
+    ],
     # configure_in_place = True,
     configure_options = select(
         {
@@ -17,36 +20,48 @@ configure_make(
             ],
             "@platforms//os:macos": [
                 # "--with-libevent-libdir=/opt/homebrew/Cellar/libevent/2.1.12_1",
-                # "--with-hwloc-libdir=/opt/homebrew/Cellar/hwloc/2.12.1",
+                # "--with-hwloc-libdir=/opt/homebrew/Cellar/hwloc/2.12.1/lib",
                 "--enable-mpi-fortran=no",
                 "--with-hwloc=internal",
                 "--with-libevent=internal",
                 "CC=/opt/homebrew/opt/llvm@18/bin/clang",
                 "CXX=/opt/homebrew/opt/llvm@18/bin/clang++",
+                "CFLAGS='-O3 -DNDEBUG -finline-functions'",
+                "CXXFLAGS='-O3 -DNDEBUG -finline-functions'",
+                "LDFLAGS=\'-Wl,-flat_namespace -Wl,-commons,use_dylibs\'",
+                "RANLIB=/usr/bin/ranlib",
+                "AR_FLAGS=rv",
+                "AR=/usr/bin/ar",
             ],
         },
     ),
-    env = {
-        "CFLAGS": "-O3 -DNDEBUG  -finline-functions",
-        "CXXFLAGS": "-O3 -DNDEBUG  -finline-functions",
-        "AR": "/opt/homebrew/opt/llvm@18/bin/llvm-ar",
-        # "ARFLAGS": "rcs",
-        # "AR_FLAGS": "rcs",
-        # "CC": "/opt/homebrew/opt/llvm@18/bin/clang",
-        # "CXX": "/opt/homebrew/opt/llvm@18/bin/clang++",
-    },
     install_prefix = "build",
     lib_source = ":openmpi_srcs",
-    # targets = [
-    #     "all",
-    #     "install",
+    # out_binaries = [
+    #     "mpicxx",
+    #     "mpicc",
+    #     "mpiexec",
     # ],
     visibility = ["//visibility:public"],
 )
 
 # filegroup(
-#     name = "openmpi",
-#     srcs = [":configure_mpi_clang"],
-#     output_group = "",
+#     name = "mpicxx",
+#     srcs = [":configure_mpi_clang18"],
+#     output_group = "mpicxx",
+#     visibility = ["//visibility:public"],
+# )
+
+# filegroup(
+#     name = "mpicc",
+#     srcs = [":configure_mpi_clang18"],
+#     output_group = "mpicc",
+#     visibility = ["//visibility:public"],
+# )
+
+# filegroup(
+#     name = "mpiexec",
+#     srcs = [":configure_mpi_clang18"],
+#     output_group = "mpiexec",
 #     visibility = ["//visibility:public"],
 # )
