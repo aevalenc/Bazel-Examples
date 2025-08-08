@@ -35,33 +35,48 @@ configure_make(
             ],
         },
     ),
-    install_prefix = "build",
+    # install_prefix = "build",
     lib_source = ":openmpi_srcs",
-    # out_binaries = [
-    #     "mpicxx",
-    #     "mpicc",
-    #     "mpiexec",
-    # ],
+    out_binaries = [
+        "mpicxx",
+        "mpicc",
+        "mpiexec",
+    ],
+    out_shared_libs = [
+        "libevent_core-2.1.7.dylib",
+        "libevent_core.dylib",
+        "libevent_extra-2.1.7.dylib",
+        "libevent_extra.dylib",
+        "libevent_pthreads-2.1.7.dylib",
+        "libevent_pthreads.dylib",
+        "libpmix.2.dylib",
+        "libpmix.dylib",
+    ],
+    out_static_libs = [
+        "libevent_core.a",
+        "libevent_extra.a",
+        "libevent_pthreads.a",
+    ],
     visibility = ["//visibility:public"],
 )
 
-# filegroup(
-#     name = "mpicxx",
-#     srcs = [":configure_mpi_clang18"],
-#     output_group = "mpicxx",
-#     visibility = ["//visibility:public"],
-# )
+filegroup(
+    name = "mpicxx",
+    srcs = [":configure_mpi_clang18"],
+    output_group = "mpicxx",
+    visibility = ["//visibility:public"],
+)
 
-# filegroup(
-#     name = "mpicc",
-#     srcs = [":configure_mpi_clang18"],
-#     output_group = "mpicc",
-#     visibility = ["//visibility:public"],
-# )
+filegroup(
+    name = "mpicc",
+    srcs = [":configure_mpi_clang18"],
+    output_group = "mpicc",
+    visibility = ["//visibility:public"],
+)
 
-# filegroup(
-#     name = "mpiexec",
-#     srcs = [":configure_mpi_clang18"],
-#     output_group = "mpiexec",
-#     visibility = ["//visibility:public"],
-# )
+filegroup(
+    name = "mpiexec",
+    srcs = [":configure_mpi_clang18"],
+    output_group = "mpiexec",
+    visibility = ["//visibility:public"],
+)
