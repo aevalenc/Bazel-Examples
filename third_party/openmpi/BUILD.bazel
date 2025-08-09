@@ -1,5 +1,5 @@
 alias(
-    name = "build_mpicc",
-    actual = "@openmpi//:mpicc",
+    name = "build_mpi",
+    actual = "@openmpi//:openmpi",
     visibility = ["//visibility:public"],
 )

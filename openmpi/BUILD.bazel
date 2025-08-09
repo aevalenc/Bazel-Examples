@@ -1,4 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
 cc_binary(
     name = "mpi_hello_world",
     srcs = ["mpi_hello_world.c"],
+    # linkopts = [
+    #     "-L" + "$(execroot //third_party/openmpi:build_mpi)",
+    #     "-lmpi",
+    # ],
+    deps = [
+        "@openmpi//:configure_mpi_clang18",
+    ],
 )

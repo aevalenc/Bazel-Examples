@@ -1,3 +1,4 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_foreign_cc//foreign_cc:configure.bzl", "configure_make")
 
 filegroup(
@@ -11,7 +12,7 @@ configure_make(
         "V=1",
         "-j4",
     ],
-    # configure_in_place = True,
+    configure_in_place = True,
     configure_options = select(
         {
             "//conditions:default": [
@@ -35,7 +36,6 @@ configure_make(
             ],
         },
     ),
-    # install_prefix = "build",
     lib_source = ":openmpi_srcs",
     out_binaries = [
         "mpicxx",
@@ -49,13 +49,28 @@ configure_make(
         "libevent_extra.dylib",
         "libevent_pthreads-2.1.7.dylib",
         "libevent_pthreads.dylib",
+        "libevent-2.1.7.dylib",
+        "libevent.dylib",
+        "libhwloc.15.dylib",
+        "libhwloc.dylib",
+        "libmpi.40.dylib",
+        "libmpi.dylib",
+        "libopen-pal.80.dylib",
+        "libopen-pal.dylib",
         "libpmix.2.dylib",
         "libpmix.dylib",
+        "libprrte.3.dylib",
+        "libprrte.dylib",
     ],
     out_static_libs = [
         "libevent_core.a",
         "libevent_extra.a",
         "libevent_pthreads.a",
+        "libevent.a",
+    ],
+    targets = [
+        "PREFIX=$$INSTALLDIR$$ all",
+        "PREFIX=$$INSTALLDIR$$ install",
     ],
     visibility = ["//visibility:public"],
 )
@@ -78,5 +93,18 @@ filegroup(
     name = "mpiexec",
     srcs = [":configure_mpi_clang18"],
     output_group = "mpiexec",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "openmpi_headers",
+    srcs = [":configure_mpi_clang18"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "openmpi",
+    hdrs = [":openmpi_headers"],
+    includes = ["."],
     visibility = ["//visibility:public"],
 )
